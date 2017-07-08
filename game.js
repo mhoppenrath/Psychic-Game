@@ -5,9 +5,9 @@
     var loss = 0;
     var guesses = 9;
     // creating an empty array of past moves
-
-	//creates a array with all the letters between a-z. Case is not an issue due to on event key
-	var alphebetSoup = [
+    var moves= [];
+    //creates a array with all the letters between a-z. Case is not an issue due to on event key
+    var alphebetSoup = [
         "a",
         "b",
         "c",
@@ -36,38 +36,46 @@
         "z"
     ];
     // the function to create the computer's guess
-    function resetGuess(){
-    	var random = Math.floor(Math.random() * (max - min + 1) + min);
-    	var letter = alphebetSoup[random];
-    	return letter;
+    function resetGuess() {
+        var random = Math.floor(Math.random() * (max - min + 1) + min);
+        var letter = alphebetSoup[random];
+        return letter;
 
     }
     //initiallizing for the first round
     var compMind = resetGuess();
     console.log(compMind);
     //what happens when we guess a key on the key board
-	document.onkeyup = function(event) {
-    	var press = event.key;
-    	console.log(press)
-    	if (compMind == press) {
-    		win ++;
-    		compMind=resetGuess()
-    		console.log("wins: " + win)
-    		console.log("New comp " + compMind)
-    	}
-    	else if ((alphebetSoup.indexOf(press) != -1) && guesses > 1) {
-    		guesses --;
-    		console.log("guesses " + guesses)
-    	} 
-    	else if (alphebetSoup.indexOf(press) != -1){
-    		loss ++;
-    		guesses = 9;
-    		compMind=resetGuess()
-    		console.log("losses " + loss) 
-    		console.log("new comp " +compMind)
-    	}
+    document.onkeyup = function(event) {
+        var press = event.key;
+        console.log(press)
+        if (moves.indexOf(press) == -1){
+        if (compMind == press) {
+            win++;
+            compMind = resetGuess()
+            console.log("wins: " + win)
+            console.log("New comp " + compMind)
+        } else if ((alphebetSoup.indexOf(press) != -1) && guesses > 1) {
+            guesses--;
+            console.log("guesses " + guesses)
+            moves.push(press);
+        } else if (alphebetSoup.indexOf(press) != -1) {
+            loss++;
+            guesses = 9;
+            compMind = resetGuess()
+            console.log("losses " + loss)
+            console.log("new comp " + compMind)
+        }
     }
+    }
+    //
+    // THIS SECTION IS FOR THE DATA TO BE VISUALIZED
+    //Fist groups is the various counters
+    var html1 = "win";
+
+    document.querySelector("#counter").innerHTML = html1;
+
+
 
 
     //
-
