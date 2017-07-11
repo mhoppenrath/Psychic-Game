@@ -38,7 +38,7 @@
     // the function to create the computer's guess
     function resetGuess() {
         var random = Math.floor(Math.random() * (max - min + 1) + min);
-        var letter = alphebetSoup[random];
+        var letter = alphebetSoup[random]; //technically could return here but want to make it more readible
         return letter;
 
     }
@@ -48,33 +48,50 @@
     //what happens when we guess a key on the key board
     document.onkeyup = function(event) {
         var press = event.key;
+   //this is for getting the letters that have been guessed
         console.log(press)
         if (moves.indexOf(press) == -1){
-        if (compMind == press) {
-            win++;
-            compMind = resetGuess()
-            console.log("wins: " + win)
-            console.log("New comp " + compMind)
-        } else if ((alphebetSoup.indexOf(press) != -1) && guesses > 1) {
-            guesses--;
-            console.log("guesses " + guesses)
-            moves.push(press);
-        } else if (alphebetSoup.indexOf(press) != -1) {
-            loss++;
-            guesses = 9;
-            compMind = resetGuess()
-            console.log("losses " + loss)
-            console.log("new comp " + compMind)
+        	var movesMade = document.getElementById("yourMoves");
+    		for (var i = 0; i < moves.length; i++) {
+      			var newMove = document.createElement("div");
+				newMove.innerHTML = moves[i];
+      			movesMade.appendChild(newMove);
+    		}
+        	if (compMind == press) {
+            	win++;
+            	compMind = resetGuess()
+            	console.log("wins: " + win)
+            	console.log("New comp " + compMind)
+            	moves = [];
+        	} else if ((alphebetSoup.indexOf(press) != -1) && guesses > 1) {
+            	guesses--;
+            	console.log("guesses " + guesses);
+            	var moveMade = press
+            	moves.push(moveMade);
+        	} else if (alphebetSoup.indexOf(press) != -1) {
+            	loss++;
+            	guesses = 9;
+            	compMind = resetGuess();
+            	console.log("losses " + loss);
+            	console.log("new comp " + compMind);
+            	moves = []; //empty the moves array
         }
+
+        //this section will create the various counters that track the record and guesses left
+
+        var counters =
+          "<div class=\"col-md-6\"><h2>You wins: <mark>" + win + "</mark></h2></div>" +
+          "<div class=\"col-md-6\"><h2>You losses: <mark>" + loss + "</mark></h2></div>"+
+          "<div class=\"col-md-6\"><h2>guesses left: <mark>" + guesses + "</mark></h2></div>";
+
+   document.getElementById("counter").innerHTML=counters;
+
     }
     }
+
     //
     // THIS SECTION IS FOR THE DATA TO BE VISUALIZED
     //Fist groups is the various counters
-    var html1 = "win";
-
-    document.querySelector("#counter").innerHTML = html1;
-
 
 
 
