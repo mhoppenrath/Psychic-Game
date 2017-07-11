@@ -52,39 +52,40 @@
         console.log(press)
         if (moves.indexOf(press) == -1){
         	var movesMade = document.getElementById("yourMoves");
-    		for (var i = 0; i < moves.length; i++) {
       			var newMove = document.createElement("div");
-				newMove.innerHTML = moves[i];
-      			movesMade.appendChild(newMove);
-    		}
+				newMove.innerHTML = press;
+      			movesMade.appendChild(newMove); //this will crete a list that then adds the lastest press to the bottom
         	if (compMind == press) {
             	win++;
+            	guesses = 9;
             	compMind = resetGuess()
             	console.log("wins: " + win)
             	console.log("New comp " + compMind)
-            	moves = [];
+            	document.getElementById("yourMoves").innerHTML = "";
+            	moves = [];// adds one to the win count, couses the computer to reset it's guess and the clears the move array
         	} else if ((alphebetSoup.indexOf(press) != -1) && guesses > 1) {
             	guesses--;
             	console.log("guesses " + guesses);
             	var moveMade = press
-            	moves.push(moveMade);
+            	moves.push(moveMade);// removes a guess count, creates a variable that is then pushed into the move made
         	} else if (alphebetSoup.indexOf(press) != -1) {
             	loss++;
             	guesses = 9;
             	compMind = resetGuess();
             	console.log("losses " + loss);
             	console.log("new comp " + compMind);
-            	moves = []; //empty the moves array
+            	document.getElementById("yourMoves").innerHTML = "";
+            	moves = []; //adds one to the loss count, then resets guess counter and clears the move array
         }
 
-        //this section will create the various counters that track the record and guesses left
+        //this section will create the various counters that track the record and guesses left once the first key is pressed
 
         var counters =
           "<div class=\"col-md-6\"><h2>You wins: <mark>" + win + "</mark></h2></div>" +
           "<div class=\"col-md-6\"><h2>You losses: <mark>" + loss + "</mark></h2></div>"+
           "<div class=\"col-md-6\"><h2>guesses left: <mark>" + guesses + "</mark></h2></div>";
 
-   document.getElementById("counter").innerHTML=counters;
+   		document.getElementById("counter").innerHTML=counters;
 
     }
     }
